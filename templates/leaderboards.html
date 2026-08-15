@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Leaderboards - The Streaking of Isaac{% endblock %}
+{% block content %}
+<h1>Leaderboards</h1>
+
+{% if leaderboards.is_empty() %}
+    <p>No leaderboards for now.</p>
+{% else %}
+    <ul class="board-list">
+        {% for lb in leaderboards %}
+        <li>
+            <a href="/leaderboard/{{ lb.slug }}">{{ lb.title }}</a>
+            {% if let Some(desc) = lb.description %}
+                <p class="muted">{{ desc }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}{{ leaderboard.title }} - The Streaking of Isaac{% endblock %}
+{% block content %}
+<a href="/leaderboards" class="back">&larr; All Leaderboards</a>
+<h1>{{ leaderboard.title }}</h1>
+{% if let Some(desc) = leaderboard.description %}
+    <p class="muted">{{ desc }}</p>
+{% endif %}
+
+{% if is_admin %}
+<h2>Add score (admin)</h2>
+<form method="post" action="/admin/leaderboard/{{ leaderboard.slug }}/entries">
+    <input type="text" name="player_name" placeholder="Player name" required
+        value="{% if let Some(pe) = prefill_entry %}{{ pe.player_name }}{% endif %}">
+    <input type="text" name="player_link" placeholder="https://twitch.tv/..."
+        value="{% if let Some(pe) = prefill_entry %}{% if let Some(pl) = pe.player_link %}{{ pl }}{% endif %}{% endif %}">
+    <input type="number" name="score" placeholder="Score" required
+        value="{% if let Some(pe) = prefill_entry %}{{ pe.score }}{% endif %}">
+    <input type="text" name="stat_text" placeholder="Dead/Alive, No Reset, Segmented run, etc..."
+        value="{% if let Some(pe) = prefill_entry %}{{ pe.stat_text }}{% endif %}">
+    <input type="text" name="stat_link" placeholder="Clip link (optionnal)"
+        value="{% if let Some(pe) = prefill_entry %}{% if let Some(sl) = pe.stat_link %}{{ sl }}{% endif %}{% endif %}">
+    <textarea name="note" placeholder="Note...">{% if let Some(pe) = prefill_entry %}{{ pe.note }}{% endif %}</textarea>
+    <button type="submit">Add/Update</button>
+</form>
+{% endif %}
+
+<table class="board">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Player name</th>
+            <th>{{ leaderboard.unit }}</th>
+            <th>{{ leaderboard.stat }}</th>
+            <th>Note</th>
+            {% if is_admin %}
+                <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                {% if let Some(player_link) = entry.player_link %}
+                    <a href="{{ player_link }}" target="_blank" rel="noopener">{{ entry.player_name }}</a>
+                {% else %}
+                    {{ entry.player_name }}
+                {% endif %}
+            </td>
+            <td>{{ entry.score }}</td>
+            <td>
+                {% if let Some(stat_link) = entry.stat_link %}
+                    <a href="{{ stat_link }}" target="_blank" rel="noopener">{{ entry.stat_text }}</a>
+                {% else %}
+                    {{ entry.stat_text }}
+                {% endif %}
+            </td>
+            <td>
+                {% if !entry.note.trim().is_empty() %}
+                    <details class="notes-popover">
+                        <summary>Note</summary>
+                        <p>{{ entry.note }}</p>
+                    </details>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            {% if is_admin %}
+                <td class="actions">
+                    <a href="/leaderboard/{{ leaderboard.slug }}?edit_id={{ entry.id }}" class="btn-square btn-edit" title="Modify">✎</a>
+                    <form method="post" action="/admin/leaderboard/{{ leaderboard.slug }}/entries/remove" class="inline-form"
+                        onsubmit="return confirm('Remove {{ entry.player_name }}\'s score ?');">
+                        <input type="hidden" name="entry_id" value="{{ entry.id }}">
+                        <button type="submit" class="btn-square btn-remove" title="Remove">✘</button>
+                    </form>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

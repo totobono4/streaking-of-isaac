@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}The Streaking of Isaac{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <a href="/" class="logo">The Streaking of Isaac</a>
+        <nav>
+            <a href="/rules">Rules</a>
+            <a href="/leaderboards">Leaderboards</a>
+            {% if is_admin %}
+                <a href="/admin">Admin</a>
+                <a href="/admin/logout">Disconnect</a>
+            {% else %}
+                <a href="/admin/login">Admin Login</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

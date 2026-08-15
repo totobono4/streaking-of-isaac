@@ -1,0 +1,213 @@
+:root {
+    --bg: #C7B29A;
+    --panel: #A59481;
+    --accent: #9E0B0F;
+    --text: #362F2D;
+    --muted: #362F2D;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--panel);
+    border-bottom: 2px solid var(--accent);
+}
+
+.logo {
+    color: var(--accent);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav a {
+    color: var(--text);
+    margin-left: 1rem;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.board-list { list-style: none; padding: 0; }
+.board-list li {
+    background: var(--panel);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+}
+.board-list a { color: var(--accent); font-size: 1.1rem; text-decoration: none; }
+
+.muted { color: var(--muted); font-size: 0.9rem; }
+
+table.board {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+table.board th, table.board td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #362F2D;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+    margin-top: 1rem;
+}
+form input, form button {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #362F2D;
+    background: var(--panel);
+    color: var(--text);
+}
+form button {
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    color: #C7B29A;
+}
+
+.error { color: var(--accent); }
+.back { color: var(--muted); text-decoration: none; }
+
+input::placeholder {
+  color: #9E0B0F;
+  opacity: 0.5;
+}
+
+.notes-popover {
+    position: relative;
+    display: inline-block;
+}
+.notes-popover summary {
+    cursor: pointer;
+    color: var(--accent);
+    list-style: none;
+}
+.notes-popover summary::-webkit-details-marker { display: none; }
+.notes-popover[open] p {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    width: 380px;
+    max-width: 90vw;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* Firefox */
+.notes-popover[open] p {
+    /* ... tes règles existantes ... */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--panel);
+}
+
+/* Chrome / Edge / Safari */
+.notes-popover[open] p::-webkit-scrollbar {
+    width: 8px;
+}
+.notes-popover[open] p::-webkit-scrollbar-track {
+    background: var(--panel);
+    border-radius: 6px;
+}
+.notes-popover[open] p::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 6px;
+}
+.notes-popover[open] p::-webkit-scrollbar-thumb:hover {
+    background: #d9748a; /* une teinte un peu plus claire que --accent */
+}
+
+.actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.btn-square {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: var(--panel);
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-edit:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-remove {
+    color: #e35d5d;
+}
+.btn-remove:hover {
+    background: #e35d5d;
+    border-color: #e35d5d;
+    color: white;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.btn-danger {
+    background: #e35d5d;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    color: var(--muted);
+    text-decoration: none;
+}
+.btn-cancel:hover {
+    color: var(--text);
+}

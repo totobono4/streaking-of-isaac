@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin - The Streaking of Isaac{% endblock %}
+{% block content %}
+<h1>Admin Panel</h1>
+
+<h2>Create leaderboard</h2>
+<form method="post" action="/admin/leaderboards">
+    <input type="text" name="slug" placeholder="slug (ex: eden-all-chapter)" required>
+    <input type="text" name="title" placeholder="Displayed leaderboard name" required>
+    <input type="text" name="description" placeholder="Description (optional)">
+    <input type="text" name="unit" placeholder="Unit (ex: Best Steak, Time, Death Count)">
+    <input type="text" name="stat" placeholder="Stat (ex: Status, No Reset, Speedrun)">
+    <label><input type="checkbox" name="lower_is_better" value="true"> Lowest score = best (for timed leaderboards)</label>
+    <button type="submit">Create</button>
+</form>
+
+<h2>Existing leaderboards</h2>
+<ul>
+    {% for lb in leaderboards %}
+    <li><a href="/leaderboard/{{ lb.slug }}">{{ lb.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
