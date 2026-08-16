@@ -49,8 +49,8 @@ async fn main() -> anyhow::Result<()> {
     
     if let Ok(user_count) = db::user_count(&state.pool).await {
         if user_count == 0 {
-            let hash = auth::hash_password("admin")?;
-            db::create_user(&state.pool, "adminofisaac", &hash, true).await.ok();
+            let hash = auth::hash_password("adminofisaac")?;
+            db::create_user(&state.pool, "admin", &hash, true).await.ok();
         }
     }
 
