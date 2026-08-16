@@ -3,7 +3,7 @@ use crate::auth;
 use crate::db;
 use crate::db::Entry;
 
-use askama_axum::IntoResponse;
+use axum::response::IntoResponse;
 use axum::extract::Query;
 use axum::extract::State;
 use axum::extract::Path;
@@ -12,7 +12,7 @@ use axum::Form;
 use serde::Deserialize;
 use tower_sessions::Session;
 
-#[derive(askama::Template)]
+#[derive(askama::Template, askama_web::WebTemplate)]
 #[template(path = "leaderboards.html")]
 struct LeaderBoardsTemplate {
     leaderboards: Vec<db::Leaderboard>,
@@ -154,7 +154,7 @@ pub struct PrefillEntryParams {
     edit_id: Option<i64>,
 }
 
-#[derive(askama::Template)]
+#[derive(askama::Template, askama_web::WebTemplate)]
 #[template(path = "leaderboard.html")]
 struct LeaderboardTemplate {
     leaderboard: db::Leaderboard,

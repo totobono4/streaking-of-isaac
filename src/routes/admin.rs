@@ -3,7 +3,7 @@ use crate::state::AppState;
 use crate::auth;
 use crate::db;
 
-use askama_axum::IntoResponse;
+use axum::response::IntoResponse;
 use axum::extract::Query;
 use axum::extract::State;
 use axum::response::Redirect;
@@ -11,7 +11,7 @@ use axum::Form;
 use serde::Deserialize;
 use tower_sessions::Session;
 
-#[derive(askama::Template)]
+#[derive(askama::Template, askama_web::WebTemplate)]
 #[template(path = "login.html")]
 struct LoginTemplate {
     error: Option<String>,
@@ -69,7 +69,7 @@ pub struct PrefillLeaderboardParams {
     slug: Option<String>,
 }
 
-#[derive(askama::Template)]
+#[derive(askama::Template, askama_web::WebTemplate)]
 #[template(path = "admin.html")]
 struct AdminTemplate {
     leaderboards: Vec<db::Leaderboard>,

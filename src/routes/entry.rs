@@ -2,7 +2,7 @@ use crate::state::AppState;
 use crate::auth;
 use crate::db;
 
-use askama_axum::IntoResponse;
+use axum::response::IntoResponse;
 use axum::extract::State;
 use axum::extract::Path;
 use axum::response::Redirect;

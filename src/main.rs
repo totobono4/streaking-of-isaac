@@ -2,7 +2,7 @@ use streaking_of_isaac::state::AppState;
 use streaking_of_isaac::db;
 use streaking_of_isaac::routes::*;
 
-use askama_axum::IntoResponse;
+use axum::response::IntoResponse;
 use axum::response::Redirect;
 use axum::routing::{get, post};
 use axum::Router;
@@ -31,15 +31,15 @@ async fn main() -> anyhow::Result<()> {
         .route("/", get(index))
         .route("/rules", get(rules))
         .route("/leaderboards", get(leaderboards))
-        .route("/leaderboard/:slug", get(view_leaderboard))
+        .route("/leaderboard/{slug}", get(view_leaderboard))
         .route("/admin/login", get(login_form).post(login_submit))
         .route("/admin/logout", get(logout))
         .route("/admin", get(admin_panel))
         .route("/admin/leaderboard/create", post(create_leaderboard))
         .route("/admin/leaderboard/update", post(update_leaderboard))
         .route("/admin/leaderboard/remove", post(remove_leaderboard))
-        .route("/admin/leaderboard/:slug/entries/upsert", post(upsert_entry_to_leaderboard))
-        .route("/admin/leaderboard/:slug/entries/remove", post(remove_entry))
+        .route("/admin/leaderboard/{slug}/entries/upsert", post(upsert_entry_to_leaderboard))
+        .route("/admin/leaderboard/{slug}/entries/remove", post(remove_entry))
         .nest_service("/static", ServeDir::new("static"))
         .layer(session_layer)
         .with_state(state);

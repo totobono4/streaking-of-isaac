@@ -1,9 +1,9 @@
 use crate::auth;
 
-use askama_axum::IntoResponse;
+use axum::response::IntoResponse;
 use tower_sessions::Session;
 
-#[derive(askama::Template)]
+#[derive(askama::Template, askama_web::WebTemplate)]
 #[template(path = "rules.html")]
 struct RulesTemplate {
     is_admin: bool,
