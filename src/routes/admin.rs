@@ -111,6 +111,7 @@ pub struct PrefillLeaderboardParams {
 struct AdminTemplate {
     leaderboards: Vec<db::Leaderboard>,
     is_admin: bool,
+    admins: Vec<db::User>,
 
     prefill_leaderboard: Option<Leaderboard>,
 }
@@ -124,12 +125,15 @@ pub async fn admin_panel(
         return Redirect::to("/admin/login").into_response();
     }
     let leaderboards = db::list_leaderboards(&state.pool).await.unwrap_or_default();
+    let admins = db::list_users(&state.pool).await.unwrap_or_default();
+
     let prefill_leaderboard = if let Some(slug) = params.slug {
         db::get_leaderboard_by_slug(&state.pool, &slug).await.unwrap_or(None)
     } else { None };
     AdminTemplate {
         leaderboards,
         is_admin: true,
+        admins,
 
         prefill_leaderboard,
     }

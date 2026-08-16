@@ -40,6 +40,17 @@ pub async fn remove_user(
     Ok(())
 }
 
+pub async fn list_users(
+    pool: &SqlitePool,
+) -> anyhow::Result<Vec<User>> {
+    let rows = sqlx::query_as::<_, User>(
+        "SELECT * FROM users"
+    )
+        .fetch_all(pool)
+        .await?;
+    Ok(rows)
+}
+
 pub async fn find_user_by_username(
     pool: &SqlitePool,
     username: &str,

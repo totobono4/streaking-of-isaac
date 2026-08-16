@@ -16,6 +16,13 @@
     <button type="submit">Remove</button>
 </form>
 
+<h2>Existing admins</h2>
+{% for user in admins %}
+<tr>
+    <td>{{ user.username }}</td>
+</tr>
+{% endfor %}
+
 <h2>Create leaderboard</h2>
 <form method="post" action="/admin/leaderboard/{% if let Some(pl) = prefill_leaderboard %}update{% else %}create{% endif %}">
     {% if let Some(pl) = prefill_leaderboard %}
