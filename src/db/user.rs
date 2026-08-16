@@ -27,19 +27,6 @@ pub async fn create_user(
     Ok(())
 }
 
-pub async fn remove_user(
-    pool: &SqlitePool,
-    username: &str,
-) -> anyhow::Result<()> {
-    sqlx::query(
-        "DELETE FROM users WHERE username = ?",
-    )
-    .bind(username)
-    .execute(pool)
-    .await?;
-    Ok(())
-}
-
 pub async fn list_users(
     pool: &SqlitePool,
 ) -> anyhow::Result<Vec<User>> {
