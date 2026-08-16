@@ -1,6 +1,5 @@
 use streaking_of_isaac::state::AppState;
 use streaking_of_isaac::db;
-use streaking_of_isaac::auth;
 use streaking_of_isaac::routes::*;
 
 use axum::response::IntoResponse;
