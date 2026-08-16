@@ -45,13 +45,6 @@ async fn main() -> anyhow::Result<()> {
         .layer(session_layer)
         .with_state(state.clone());
     
-    if let Ok(user_count) = db::user_count(&state.pool).await {
-        if user_count == 0 {
-            let hash = auth::hash_password("adminofisaac")?;
-            db::create_user(&state.pool, "admin", &hash, true).await.ok();
-        }
-    }
-
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
     tracing::info!("Serveur lancé sur http://0.0.0.0:8080");
     axum::serve(listener, app).await?;
