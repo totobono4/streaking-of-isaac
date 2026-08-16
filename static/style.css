@@ -224,6 +224,10 @@ input::placeholder {
     color: var(--accent);
 }
 
+.trophy {
+    width: 1rem;
+}
+
 @media (max-width: 768px) {
     .logo {
         position: static;

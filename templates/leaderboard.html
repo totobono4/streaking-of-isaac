@@ -42,7 +42,12 @@
     <tbody>
         {% for entry in entries %}
         <tr>
-            <td>{{ loop.index }}</td>
+            <td>
+                {% if loop.index == 1 %}<img class="trophy" src="/static/ressources/gold_trophy.png" alt="trophy">
+                {% else if loop.index == 2 %}<img class="trophy" src="/static/ressources/silver_trophy.png" alt="trophy">
+                {% else if loop.index == 3 %}<img class="trophy" src="/static/ressources/bronze_trophy.png" alt="trophy">
+                {% else %}{{ loop.index }}{% endif %}
+            </td>
             <td>
                 {% if let Some(player_link) = entry.player_link %}
                     <a href="{{ player_link }}" target="_blank" rel="noopener">{{ entry.player_name }}</a>
