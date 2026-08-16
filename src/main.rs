@@ -1,5 +1,6 @@
 use streaking_of_isaac::state::AppState;
 use streaking_of_isaac::db;
+use streaking_of_isaac::auth;
 use streaking_of_isaac::routes::*;
 
 use axum::response::IntoResponse;
@@ -44,7 +45,14 @@ async fn main() -> anyhow::Result<()> {
         .route("/admin/leaderboard/{slug}/entries/remove", post(remove_entry))
         .nest_service("/static", ServeDir::new("static"))
         .layer(session_layer)
-        .with_state(state);
+        .with_state(state.clone());
+    
+    if let Ok(user_count) = db::user_count(&state.pool).await {
+        if user_count == 0 {
+            let hash = auth::hash_password("admin")?;
+            db::create_user(&state.pool, "adminofisaac", &hash, true).await.ok();
+        }
+    }
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
     tracing::info!("Serveur lancé sur http://0.0.0.0:8080");
