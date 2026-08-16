@@ -1,8 +1,10 @@
+use crate::db::Leaderboard;
 use crate::state::AppState;
 use crate::auth;
 use crate::db;
 
 use askama_axum::IntoResponse;
+use axum::extract::Query;
 use axum::extract::State;
 use axum::response::Redirect;
 use axum::Form;
@@ -13,13 +15,6 @@ use tower_sessions::Session;
 #[template(path = "login.html")]
 struct LoginTemplate {
     error: Option<String>,
-    is_admin: bool,
-}
-
-#[derive(askama::Template)]
-#[template(path = "admin.html")]
-struct AdminTemplate {
-    leaderboards: Vec<db::Leaderboard>,
     is_admin: bool,
 }
 
@@ -69,17 +64,37 @@ pub async fn logout(session: Session) -> impl IntoResponse {
     Redirect::to("/")
 }
 
+#[derive(Deserialize)]
+pub struct PrefillLeaderboardParams {
+    slug: Option<String>,
+}
+
+#[derive(askama::Template)]
+#[template(path = "admin.html")]
+struct AdminTemplate {
+    leaderboards: Vec<db::Leaderboard>,
+    is_admin: bool,
+
+    prefill_leaderboard: Option<Leaderboard>,
+}
+
 pub async fn admin_panel(
     State(state): State<AppState>,
-    session: Session
+    session: Session,
+    Query(params): Query<PrefillLeaderboardParams>,
 ) -> impl IntoResponse {
     if !auth::is_admin(&session).await {
         return Redirect::to("/admin/login").into_response();
     }
     let leaderboards = db::list_leaderboards(&state.pool).await.unwrap_or_default();
+    let prefill_leaderboard = if let Some(slug) = params.slug {
+        db::get_leaderboard_by_slug(&state.pool, &slug).await.unwrap_or(None)
+    } else { None };
     AdminTemplate {
         leaderboards,
         is_admin: true,
+
+        prefill_leaderboard,
     }
     .into_response()
 }

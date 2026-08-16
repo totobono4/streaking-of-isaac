@@ -11,6 +11,10 @@ pub struct Entry {
     pub stat_text: String,
     pub stat_link: Option<String>,
     pub note: String,
+    pub created_by: i64,
+    pub created_at: String,
+    pub updated_by: i64,
+    pub updated_at: String,
 }
 
 pub async fn add_and_update_entry(
@@ -22,10 +26,10 @@ pub async fn add_and_update_entry(
     stat_text: &str,
     stat_link: Option<&str>,
     note: &str,
-    added_by: i64,
+    created_by: i64,
 ) -> anyhow::Result<()> {
     sqlx::query(
-        "INSERT INTO entries (leaderboard_id, player_name, player_link, score, stat_text, stat_link, note, added_by, updated_by, updated_at) \
+        "INSERT INTO entries (leaderboard_id, player_name, player_link, score, stat_text, stat_link, note, created_by, updated_by, updated_at) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now')) ON CONFLICT (leaderboard_id, player_name) DO UPDATE SET \
         player_name = excluded.player_name, player_link = excluded.player_link, score = excluded.score, \
         stat_text = excluded.stat_text, stat_link = excluded.stat_link, note = excluded.note, updated_by = excluded.updated_by, updated_at = excluded.updated_at",
@@ -37,8 +41,8 @@ pub async fn add_and_update_entry(
     .bind(stat_text)
     .bind(stat_link)
     .bind(note)
-    .bind(added_by)
-    .bind(added_by)
+    .bind(created_by)
+    .bind(created_by)
     .execute(pool)
     .await?;
     Ok(())
@@ -46,12 +50,12 @@ pub async fn add_and_update_entry(
 
 pub async fn remove_entry_by_id(
     pool: &SqlitePool,
-    entry_id: i64,
+    id: i64,
 ) -> anyhow::Result<()> {
     sqlx::query(
         "DELETE FROM entries WHERE id = ?"
     )
-    .bind(entry_id)
+    .bind(id)
     .execute(pool)
     .await?;
     Ok(())
@@ -64,7 +68,9 @@ pub async fn list_entries(
 ) -> anyhow::Result<Vec<Entry>> {
     let order = if lower_is_better { "ASC" } else { "DESC" };
     let sql = format!(
-        "SELECT id, leaderboard_id, player_name, player_link, score, stat_text, stat_link, note FROM entries WHERE leaderboard_id = ? ORDER BY score {order} LIMIT 100"
+        "SELECT id, leaderboard_id, player_name, player_link, score, stat_text, stat_link, note, \
+        created_by, created_at, updated_by, updated_at \
+        FROM entries WHERE leaderboard_id = ? ORDER BY score {order} LIMIT 100"
     );
     let rows = sqlx::query_as::<_, Entry>(&sql)
         .bind(leaderboard_id)
@@ -77,7 +83,8 @@ pub async fn get_entry_by_id(
     pool: &SqlitePool,
     entry_id: i64,
 ) -> anyhow::Result<Option<Entry>> {
-    let sql = "SELECT id, leaderboard_id, player_name, player_link, score, stat_text, stat_link, note FROM entries WHERE id = ?";
+    let sql = "SELECT id, leaderboard_id, player_name, player_link, score, stat_text, stat_link, note, \
+    created_by, created_at, updated_by, updated_at FROM entries WHERE id = ?";
     let row = sqlx::query_as::<_, Entry>(&sql)
         .bind(entry_id)
         .fetch_optional(pool)

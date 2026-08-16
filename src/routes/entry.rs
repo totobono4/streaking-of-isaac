@@ -20,7 +20,7 @@ pub struct NewEntryForm {
     note: String,
 }
 
-pub async fn add_entry_to_leaderboard(
+pub async fn upsert_entry_to_leaderboard(
     State(state): State<AppState>,
     session: Session,
     Path(slug): Path<String>,
@@ -61,7 +61,7 @@ pub async fn add_entry_to_leaderboard(
 
 #[derive(Deserialize)]
 pub struct RemoveEntryForm {
-    entry_id: i64,
+    id: i64,
 }
 
 pub async fn remove_entry(
@@ -74,7 +74,7 @@ pub async fn remove_entry(
         return Redirect::to("/admin/login");
     }
 
-    db::remove_entry_by_id(&state.pool, form.entry_id).await.ok();
+    db::remove_entry_by_id(&state.pool, form.id).await.ok();
 
     Redirect::to(&format!("/leaderboard/{}", slug))
 }

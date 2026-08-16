@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS leaderboards (
     stat TEXT NOT NULL DEFAULT 'Status',        -- displayed stat with linked clip : "Status", "Death Count". etc.
     lower_is_better INTEGER NOT NULL DEFAULT 0, -- if 1, lower score is better (usefull for "Time" score)
     created_by INTEGER REFERENCES users(id),
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_by INTEGER REFERENCES users(id),
+    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 -- An entry in a given leaderboard
@@ -30,9 +32,9 @@ CREATE TABLE IF NOT EXISTS entries (
     stat_text TEXT NOT NULL DEFAULT '???',  -- ex: Dead/Alive
     stat_link TEXT,                         -- clip link
     note TEXT,                              -- whatever to precise
-    added_by INTEGER REFERENCES users(id),
+    created_by INTEGER REFERENCES users(id),
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_by Integer REFERENCES users(id),
+    updated_by INTEGER REFERENCES users(id),
     updated_at TEXT NOT NULL DEFAULT (datetime('now')),
     UNIQUE (leaderboard_id, player_name)
 );

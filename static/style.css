@@ -62,7 +62,7 @@ table.board {
 table.board th, table.board td {
     text-align: left;
     padding: 0.5rem;
-    border-bottom: 1px solid #362F2D;
+    border-bottom: 1px solid var(--text);
 }
 
 form {
@@ -75,7 +75,7 @@ form {
 form input, form button {
     padding: 0.5rem;
     border-radius: 4px;
-    border: 1px solid #362F2D;
+    border: 1px solid var(--muted);
     background: var(--panel);
     color: var(--text);
 }
@@ -83,14 +83,14 @@ form button {
     background: var(--accent);
     border: none;
     cursor: pointer;
-    color: #C7B29A;
+    color: var(--bg);
 }
 
 .error { color: var(--accent); }
 .back { color: var(--muted); text-decoration: none; }
 
 input::placeholder {
-  color: #9E0B0F;
+  color: var(--accent);
   opacity: 0.5;
 }
 
@@ -143,7 +143,7 @@ input::placeholder {
     border-radius: 6px;
 }
 .notes-popover[open] p::-webkit-scrollbar-thumb:hover {
-    background: #d9748a; /* une teinte un peu plus claire que --accent */
+    background: var(--bg); /* une teinte un peu plus claire que --accent */
 }
 
 .actions {
@@ -163,7 +163,7 @@ input::placeholder {
     width: 28px;
     height: 28px;
     border-radius: 4px;
-    border: 1px solid #444;
+    border: 1px solid var(--muted);
     background: var(--panel);
     color: var(--text);
     text-decoration: none;
@@ -180,12 +180,12 @@ input::placeholder {
 }
 
 .btn-remove {
-    color: #e35d5d;
+    color: var(--accent);
 }
 .btn-remove:hover {
-    background: #e35d5d;
-    border-color: #e35d5d;
-    color: white;
+    background: var(--accent);
+    border-color: var(--bg);
+    color: var(--bg);
 }
 
 .confirm-actions {
@@ -196,8 +196,8 @@ input::placeholder {
 }
 
 .btn-danger {
-    background: #e35d5d;
-    color: white;
+    background: var(--accent);
+    color: var(--panel);
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
@@ -210,4 +210,8 @@ input::placeholder {
 }
 .btn-cancel:hover {
     color: var(--text);
+}
+
+.warn-edit {
+    color: var(--accent);
 }

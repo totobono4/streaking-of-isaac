@@ -9,7 +9,7 @@
 
 {% if is_admin %}
 <h2>Add score (admin)</h2>
-<form method="post" action="/admin/leaderboard/{{ leaderboard.slug }}/entries">
+<form method="post" action="/admin/leaderboard/{{ leaderboard.slug }}/entries/upsert">
     <input type="text" name="player_name" placeholder="Player name" required
         value="{% if let Some(pe) = prefill_entry %}{{ pe.player_name }}{% endif %}">
     <input type="text" name="player_link" placeholder="https://twitch.tv/..."
@@ -35,6 +35,7 @@
             <th>Note</th>
             {% if is_admin %}
                 <th>Actions</th>
+                <th>Last Update</th>
             {% endif %}
         </tr>
     </thead>
@@ -72,10 +73,11 @@
                     <a href="/leaderboard/{{ leaderboard.slug }}?edit_id={{ entry.id }}" class="btn-square btn-edit" title="Modify">✎</a>
                     <form method="post" action="/admin/leaderboard/{{ leaderboard.slug }}/entries/remove" class="inline-form"
                         onsubmit="return confirm('Remove {{ entry.player_name }}\'s score ?');">
-                        <input type="hidden" name="entry_id" value="{{ entry.id }}">
+                        <input type="hidden" name="id" value="{{ entry.id }}">
                         <button type="submit" class="btn-square btn-remove" title="Remove">✘</button>
                     </form>
                 </td>
+                <td>{{ entry.updated_at }}</td>
             {% endif %}
         </tr>
         {% endfor %}
