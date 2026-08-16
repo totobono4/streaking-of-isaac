@@ -17,18 +17,26 @@ body {
 
 .topbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     background: var(--panel);
     border-bottom: 2px solid var(--accent);
 }
 
+nav {
+    margin-left: auto;
+}
+
 .logo {
-    color: var(--accent);
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.2rem;
+  position: fixed;
+  top: 10px;
+  left: 20px;
+}
+
+.logo img {
+    width: 400px;
+    height: auto;
+    display: block;
 }
 
 nav a {
