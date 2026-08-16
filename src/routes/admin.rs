@@ -65,6 +65,43 @@ pub async fn logout(session: Session) -> impl IntoResponse {
 }
 
 #[derive(Deserialize)]
+pub struct CreateAdminForm {
+    username: String,
+    password: String,
+}
+
+pub async fn create_admin(
+    State(state): State<AppState>,
+    session: Session,
+    Form(form): Form<CreateAdminForm>,
+) -> impl IntoResponse {
+    if !auth::is_admin(&session).await {
+        return Redirect::to("/admin").into_response();
+    }
+    if let Ok(hash) = auth::hash_password(&form.password) {
+        db::create_user(&state.pool, &form.username, &hash, true).await.ok();
+    }
+    Redirect::to("/admin").into_response()
+}
+
+#[derive(Deserialize)]
+pub struct RemoveAdminForm {
+    username: String,
+}
+
+pub async fn remove_admin(
+    State(state): State<AppState>,
+    session: Session,
+    Form(form): Form<RemoveAdminForm>,
+) -> impl IntoResponse {
+    if !auth::is_admin(&session).await {
+        return Redirect::to("/admin").into_response();
+    }
+    db::remove_user(&state.pool, &form.username).await.ok();
+    Redirect::to("/admin").into_response()
+}
+
+#[derive(Deserialize)]
 pub struct PrefillLeaderboardParams {
     slug: Option<String>,
 }

@@ -22,14 +22,7 @@ async fn main() -> anyhow::Result<()> {
 
     let hash = auth::hash_password(password)?;
 
-    sqlx::query(
-        "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, 1)
-         ON CONFLICT(username) DO UPDATE SET password_hash = excluded.password_hash, is_admin = 1",
-    )
-    .bind(username)
-    .bind(hash)
-    .execute(&pool)
-    .await?;
+    db::create_user(&pool, &username, &hash, true).await.ok();
 
     println!("Admin '{username}' created/updated.");
     Ok(())

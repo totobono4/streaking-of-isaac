@@ -34,6 +34,8 @@ async fn main() -> anyhow::Result<()> {
         .route("/leaderboard/{slug}", get(view_leaderboard))
         .route("/admin/login", get(login_form).post(login_submit))
         .route("/admin/logout", get(logout))
+        .route("/admin/create", post(create_admin))
+        .route("/admin/remove", post(remove_admin))
         .route("/admin", get(admin_panel))
         .route("/admin/leaderboard/create", post(create_leaderboard))
         .route("/admin/leaderboard/update", post(update_leaderboard))
