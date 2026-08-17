@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{{ leaderboard.title }} - The Streaking of Isaac{% endblock %}
+{% block title %}{{ leaderboard.character }} {{ leaderboard.goal }} {{ leaderboard.game_version }} {{ leaderboard.modifier }} - The Streaking of Isaac{% endblock %}
 {% block content %}
 <a href="/leaderboards" class="back">&larr; All Leaderboards</a>
-<h1>{{ leaderboard.title }}</h1>
+<h1>{{ leaderboard.character }} {{ leaderboard.goal }} {{ leaderboard.game_version }} {{ leaderboard.modifier }}</h1>
 {% if let Some(desc) = leaderboard.description %}
     <p class="muted">{{ desc }}</p>
 {% endif %}

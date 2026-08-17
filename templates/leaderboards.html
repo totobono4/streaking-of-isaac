@@ -6,14 +6,40 @@
 {% if leaderboards.is_empty() %}
     <p>No leaderboards for now.</p>
 {% else %}
-    <ul class="board-list">
-        {% for lb in leaderboards %}
-        <li>
-            <a href="/leaderboard/{{ lb.slug }}">{{ lb.title }}</a>
-            {% if let Some(desc) = lb.description %}
-                <p class="muted">{{ desc }}</p>
-            {% endif %}
-        </li>
+    <ul class="game-version-list">
+        {% for game_version in GameVersion::get_vec() %}
+            {% for lb in leaderboards %}
+                {% if lb.game_version == game_version.get_string() %}
+                    <li>
+                        <p class="streak-cat"><b>{{ game_version.get_string() }}</b></p>
+                        <ul class="character-list">
+                            {% for character in Character::get_vec() %}
+                                {% for lb in leaderboards %}
+                                    {% if lb.game_version == game_version.get_string() && lb.character == character.get_string() %}
+                                        <li>
+                                            <ul class="board-list">
+                                                <p class="streak-cat"><b>{{ character.get_string() }}</b></p>
+                                                {% for goal in Goal::get_vec() %}
+                                                    {% for lb in leaderboards %}
+                                                        {% if lb.game_version == game_version.get_string() && lb.character == character.get_string() && lb.goal == goal.get_string() %}
+                                                            <li>
+                                                                <a href="/leaderboard/{{ lb.slug }}">{{ lb.goal }} {{ lb.modifier }}</a>
+                                                                {% if let Some(desc) = lb.description %}
+                                                                    <p class="muted">{{ desc }}</p>
+                                                                {% endif %}
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% break %}{% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% break %}{% endif %}
+            {% endfor %}
         {% endfor %}
     </ul>
 {% endif %}

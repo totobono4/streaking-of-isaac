@@ -2,6 +2,9 @@ use crate::db::Leaderboard;
 use crate::state::AppState;
 use crate::auth;
 use crate::db;
+use crate::db::Character;
+use crate::db::Goal;
+use crate::db::GameVersion;
 
 use axum::response::IntoResponse;
 use axum::extract::Query;

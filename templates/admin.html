@@ -17,8 +17,32 @@
     {% endif %}
     <input type="text" name="slug" placeholder="slug (ex: eden-all-chapter)" required
         value="{% if let Some(pl) = prefill_leaderboard %}{{ pl.slug }}{% endif %}">
-    <input type="text" name="title" placeholder="Displayed leaderboard name" required
-        value="{% if let Some(pl) = prefill_leaderboard %}{{ pl.title }}{% endif %}">
+    <select name="character" required>
+        {% for character in Character::get_vec() %}
+            <option value="{{ character.get_string() }}"
+                {% if let Some(pl) = prefill_leaderboard %}
+                    {% if pl.character == character.get_string() %}selected{% endif %}
+                {% endif %}>{{ character.get_string() }}</option>
+        {% endfor %}
+    </select>
+    <select name="goal" required>
+        {% for goal in Goal::get_vec() %}
+            <option value="{{ goal.get_string() }}"
+                {% if let Some(pl) = prefill_leaderboard %}
+                    {% if pl.goal == goal.get_string() %}selected{% endif %}
+                {% endif %}>{{ goal.get_string() }}</option>
+        {% endfor %}
+    </select>
+    <select name="game_version" required>
+        {% for game_version in GameVersion::get_vec() %}
+            <option value="{{ game_version.get_string() }}"
+                {% if let Some(pl) = prefill_leaderboard %}
+                    {% if pl.game_version == game_version.get_string() %}selected{% endif %}
+                {% endif %}>{{ game_version.get_string() }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="modifier" placeholder="No reset Speedrun GB"
+        value="{% if let Some(pl) = prefill_leaderboard %}{{ pl.modifier }}{% endif %}">
     <input type="text" name="description" placeholder="Description (optional)"
         value="{% if let Some(pl) = prefill_leaderboard %}{% if let Some(desc) = pl.description %}{{ desc }}{% endif %}{% endif %}">
     <input type="text" name="unit" placeholder="Unit (ex: Best Steak, Time, Death Count)"
@@ -31,17 +55,20 @@
 </form>
 
 <h2>Existing leaderboards</h2>
-{% for lb in leaderboards %}
-<tr>
-    <td><a href="/leaderboard/{{ lb.slug }}">{{ lb.title }}</a></td>
-    <td class="actions">
-        <a href="/admin?slug={{ lb.slug }}" class="btn-square btn-edit" title="Modify">✎</a>
-        <form method="post" action="/admin/leaderboard/remove" class="inline-form"
-            onsubmit="return confirm('Remove {{ lb.title }}\'s leaderboard ?');">
-            <input type="hidden" name="id" value="{{ lb.id }}">
-            <button type="submit" class="btn-square btn-remove" title="Remove">✘</button>
-        </form>
-    </td>
-</tr>
-{% endfor %}
+<table>
+    {% for lb in leaderboards %}
+        <tr>
+            <td><a href="/leaderboard/{{ lb.slug }}">{{ lb.character }} {{ lb.goal }} {{ lb.game_version }} {{ lb.modifier }}</a></td>
+            <td class="actions">
+                <a href="/admin?slug={{ lb.slug }}" class="btn-square btn-edit" title="Modify">✎</a>
+                <form method="post" action="/admin/leaderboard/remove" class="inline-form"
+                    onsubmit="return confirm('Remove {{ lb.character }} {{ lb.goal }} {{ lb.game_version }} {{ lb.modifier }} leaderboard ?');">
+                    <input type="hidden" name="id" value="{{ lb.id }}">
+                    <button type="submit" class="btn-square btn-remove" title="Remove">✘</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
 {% endblock %}

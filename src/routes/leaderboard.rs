@@ -2,6 +2,9 @@ use crate::state::AppState;
 use crate::auth;
 use crate::db;
 use crate::db::Entry;
+use crate::db::Character;
+use crate::db::Goal;
+use crate::db::GameVersion;
 
 use axum::response::IntoResponse;
 use axum::extract::Query;
@@ -34,7 +37,10 @@ pub async fn leaderboards(
 #[derive(Deserialize)]
 pub struct NewLeaderboardForm {
     slug: String,
-    title: String,
+    character: String,
+    goal: String,
+    game_version: String,
+    modifier: String,
     description: Option<String>,
     unit: String,
     stat: String,
@@ -64,7 +70,10 @@ pub async fn create_leaderboard(
     db::create_leaderboard(
         &state.pool,
         &form.slug,
-        &form.title,
+        &form.character,
+        &form.goal,
+        &form.game_version,
+        &form.modifier,
         description.as_deref(),
         &unit,
         &stat,
@@ -81,7 +90,10 @@ pub async fn create_leaderboard(
 pub struct UpdateLeaderboardForm {
     id: i64,
     slug: String,
-    title: String,
+    character: String,
+    goal: String,
+    game_version: String,
+    modifier: String,
     description: Option<String>,
     unit: String,
     stat: String,
@@ -112,7 +124,10 @@ pub async fn update_leaderboard(
         &state.pool,
         form.id,
         &form.slug,
-        &form.title,
+        &form.character,
+        &form.goal,
+        &form.game_version,
+        &form.modifier,
         description.as_deref(),
         &unit,
         &stat,
