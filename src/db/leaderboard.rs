@@ -44,8 +44,14 @@ impl Character {
 
 pub enum Goal {
     BlueBaby,
+    TheLamb,
     Mother,
+    TheBeast,
+    MegaSatan,
+    Delirium,
+    Greedier,
     FourGoals,
+    SixGoals,
     RandomBoss,
 
     DeadGod,
@@ -61,8 +67,14 @@ impl Goal {
     pub fn get_string(&self) -> &'static str {
         match self {
             Self::BlueBaby => { "Blue Baby" },
+            Self::TheLamb => { "The Lamb" },
             Self::Mother => { "Mother" },
+            Self::TheBeast => { "The Beast" },
+            Self::MegaSatan => { "Mega Satan" },
+            Self::Delirium => { "Delirium" },
+            Self::Greedier => { "Greedier" },
             Self::FourGoals => { "4 Goals" },
+            Self::SixGoals => { "6 Goals" },
             Self::RandomBoss => { "Random Boss" },
 
             Self::DeadGod => { "Dead God" },
@@ -78,8 +90,14 @@ impl Goal {
     pub fn get_vec() -> Vec<Self> {
         vec![
             Self::BlueBaby,
+            Self::TheLamb,
             Self::Mother,
+            Self::TheBeast,
+            Self::MegaSatan,
+            Self::Delirium,
+            Self::Greedier,
             Self::FourGoals,
+            Self::SixGoals,
             Self::RandomBoss,
 
             Self::DeadGod,
