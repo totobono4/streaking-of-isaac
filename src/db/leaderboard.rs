@@ -40,6 +40,7 @@ pub enum Character {
     TaintedBethany,
     TaintedJacob,
 
+    Any,
     RandomV1,
     RandomV2,
     FullRandom,
@@ -87,6 +88,7 @@ impl Character {
             Self::TaintedBethany => { "Tainted Bethany" },
             Self::TaintedJacob => { "Tainted Jacob" },
 
+            Self::Any => { "Any Character" },
             Self::RandomV1 => { "Random V1" },
             Self::RandomV2 => { "Random V2" },
             Self::FullRandom => { "Full Random" },
@@ -134,6 +136,7 @@ impl Character {
             Self::TaintedBethany,
             Self::TaintedJacob,
 
+            Self::Any,
             Self::RandomV1,
             Self::RandomV2,
             Self::FullRandom,
@@ -157,6 +160,7 @@ pub enum Goal {
     Delirium,
     Greedier,
 
+    Any,
     FourGoals,
     SixGoals,
     RandomBoss,
@@ -186,6 +190,7 @@ impl Goal {
             Self::Delirium => { "Delirium" },
             Self::Greedier => { "Greedier" },
 
+            Self::Any => { "Any Boss" },
             Self::FourGoals => { "4 Goals" },
             Self::SixGoals => { "6 Goals" },
             Self::RandomBoss => { "Random Boss" },
@@ -215,6 +220,7 @@ impl Goal {
             Self::Delirium,
             Self::Greedier,
 
+            Self::Any,
             Self::FourGoals,
             Self::SixGoals,
             Self::RandomBoss,
