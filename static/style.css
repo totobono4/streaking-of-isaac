@@ -75,19 +75,38 @@ nav a {
     border-radius: 6px;
 }
 
-.board-list {
-    list-style: none; padding: 0;
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
 }
-.board-list li {
-    background: var(--panel);
+
+.board-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 1rem;
-    margin-bottom: 0.5rem;
     border-radius: 6px;
+    background: var(--panel);
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+    min-width: 0;
+    overflow-wrap: break-word; 
 }
-.board-list a {
+
+.board-card:hover {
+    transform: translateY(-2px);
+}
+
+.board-card-title {
     color: var(--accent);
     font-size: 1.1rem;
-    text-decoration: none;
+}
+
+.board-card .muted {
+    margin-top: 4px;
+    font-size: 0.85em;
+    opacity: 0.7;
 }
 
 .streak-cat {

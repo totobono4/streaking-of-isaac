@@ -17,21 +17,23 @@
                                 {% for lb in leaderboards %}
                                     {% if lb.game_version == game_version.get_string() && lb.character == character.get_string() %}
                                         <li>
-                                            <ul class="board-list">
+                                            <div class="board-list">
                                                 <p class="streak-cat"><b>{{ character.get_string() }}</b></p>
-                                                {% for goal in Goal::get_vec() %}
-                                                    {% for lb in leaderboards %}
-                                                        {% if lb.game_version == game_version.get_string() && lb.character == character.get_string() && lb.goal == goal.get_string() %}
-                                                            <li>
-                                                                <a href="/leaderboard/{{ lb.slug }}">{{ lb.goal }} {{ lb.modifier }}</a>
-                                                                {% if let Some(desc) = lb.description %}
-                                                                    <p class="muted">{{ desc }}</p>
-                                                                {% endif %}
-                                                            </li>
-                                                        {% endif %}
+                                                <div class="card-grid">
+                                                    {% for goal in Goal::get_vec() %}
+                                                        {% for lb in leaderboards %}
+                                                            {% if lb.game_version == game_version.get_string() && lb.character == character.get_string() && lb.goal == goal.get_string() %}
+                                                                <a class="board-card" href="/leaderboard/{{ lb.slug }}">
+                                                                    <span class="board-card-title">{{ lb.goal }} {{ lb.modifier }}</span>
+                                                                    {% if let Some(desc) = lb.description %}
+                                                                        <p class="muted">{{ desc }}</p>
+                                                                    {% endif %}
+                                                                </a>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     {% endfor %}
-                                                {% endfor %}
-                                            </ul>
+                                                </div>
+                                            </div>
                                         </li>
                                     {% break %}{% endif %}
                                 {% endfor %}
