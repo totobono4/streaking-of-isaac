@@ -58,7 +58,7 @@
 <table>
     {% for lb in leaderboards %}
         <tr>
-            <td><a href="/leaderboard/{{ lb.slug }}">{{ lb.character }} {{ lb.goal }} {{ lb.game_version }} {{ lb.modifier }}</a></td>
+            <td><a href="/leaderboard/{{ lb.slug }}">{{ lb.character }} {{ lb.goal }} {{ lb.modifier }} {{ lb.game_version }}</a></td>
             <td class="actions">
                 <a href="/admin?slug={{ lb.slug }}" class="btn-square btn-edit" title="Modify">✎</a>
                 <form method="post" action="/admin/leaderboard/remove" class="inline-form"

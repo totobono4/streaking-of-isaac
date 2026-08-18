@@ -2,7 +2,7 @@
 {% block title %}{{ leaderboard.character }} {{ leaderboard.goal }} {{ leaderboard.game_version }} {{ leaderboard.modifier }} - The Streaking of Isaac{% endblock %}
 {% block content %}
 <a href="/leaderboards" class="back">&larr; All Leaderboards</a>
-<h1>{{ leaderboard.character }} {{ leaderboard.goal }} {{ leaderboard.game_version }} {{ leaderboard.modifier }}</h1>
+<h1>{{ leaderboard.character }} {{ leaderboard.goal }} {{ leaderboard.modifier }} {{ leaderboard.game_version }}</h1>
 {% if let Some(desc) = leaderboard.description %}
     <p class="muted">{{ desc }}</p>
 {% endif %}
