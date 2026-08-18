@@ -11,7 +11,8 @@ pub enum Character {
     RandomV1,
     RandomV2,
 
-    None,
+    Challenge,
+    Dead,
 }
 
 impl Character {
@@ -24,7 +25,8 @@ impl Character {
             Self::RandomV1 => { "Random V1" },
             Self::RandomV2 => { "Random V2" },
 
-            Self::None => { "" },
+            Self::Challenge => { "Challenge" },
+            Self::Dead => { "Dead" },
         }
     }
 
@@ -37,7 +39,8 @@ impl Character {
             Self::RandomV1,
             Self::RandomV2,
 
-            Self::None,
+            Self::Challenge,
+            Self::Dead,
         ]
     }
 }
@@ -53,14 +56,14 @@ pub enum Goal {
     FourGoals,
     SixGoals,
     RandomBoss,
-
-    DeadGod,
     
     UltraHard,
     Speed,
     BloodyMary,
     DeleteThis,
     Backasswards,
+
+    God,
 }
 
 impl Goal {
@@ -77,13 +80,13 @@ impl Goal {
             Self::SixGoals => { "6 Goals" },
             Self::RandomBoss => { "Random Boss" },
 
-            Self::DeadGod => { "Dead God" },
-
             Self::UltraHard => { "Ultra Hard" },
             Self::Speed => { "SPEED!" },
             Self::BloodyMary => { "Bloody Mary" },
             Self::DeleteThis => { "DELETE THIS" },
             Self::Backasswards => { "Backasswards"},
+
+            Self::God => { "Dead God" },
         }
     }
 
@@ -100,13 +103,13 @@ impl Goal {
             Self::SixGoals,
             Self::RandomBoss,
 
-            Self::DeadGod,
-
             Self::UltraHard,
             Self::Speed,
             Self::BloodyMary,
             Self::DeleteThis,
             Self::Backasswards,
+
+            Self::God,
         ]
     }
 }
