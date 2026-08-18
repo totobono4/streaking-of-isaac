@@ -128,6 +128,27 @@ form input, form button, form select, form textarea {
     color: var(--text);
     accent-color: var(--accent);
 }
+/* Firefox */
+select {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--panel);
+}
+
+/* Chrome / Edge / Safari */
+select::-webkit-scrollbar {
+    width: 8px;
+}
+select::-webkit-scrollbar-track {
+    background: var(--panel);
+    border-radius: 6px;
+}
+select::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 6px;
+}
+select::-webkit-scrollbar-thumb:hover {
+    background: var(--bg);
+}
 form button {
     background: var(--accent);
     border: none;
@@ -181,7 +202,6 @@ input::placeholder {
 
 /* Firefox */
 .notes-popover[open] p {
-    /* ... tes règles existantes ... */
     scrollbar-width: thin;
     scrollbar-color: var(--accent) var(--panel);
 }

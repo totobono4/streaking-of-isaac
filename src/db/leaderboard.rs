@@ -4,43 +4,142 @@ use serde::Serialize;
 use sqlx::SqlitePool;
 
 pub enum Character {
+    Isaac,
+    Magdalene,
+    Cain,
+    Judas,
+    BlueBaby,
+    Eve,
+    Samson,
+    Azazel,
+    Lazarus,
     Eden,
     Lost,
-    TaintedKeeper,
+    Lilith,
+    Keeper,
+    Apollyon,
+    Forgotten,
+    Bethany,
+    Jacob,
+
+    TaintedIsaac,
+    TaintedMagdalene,
+    TaintedCain,
+    TaintedJudas,
+    TaintedBlueBaby,
+    TaintedEve,
+    TaintedSamson,
+    TaintedAzazel,
+    TaintedLazarus,
+    TaintedEden,
     TaintedLost,
+    TaintedLilith,
+    TaintedKeeper,
+    TaintedApollyon,
+    TaintedForgotten,
+    TaintedBethany,
+    TaintedJacob,
+
     RandomV1,
     RandomV2,
+    FullRandom,
 
     Challenge,
-    Dead,
+    Save,
 }
 
 impl Character {
     pub fn get_string(&self) -> &'static str {
         match self {
+            Self::Isaac => { "Isaac" },
+            Self::Magdalene => { "Magdalene" },
+            Self::Cain => { "Cain" },
+            Self::Judas => { "Judas" },
+            Self::BlueBaby => { "BlueBaby" },
+            Self::Eve => { "Eve" },
+            Self::Samson => { "Samson" },
+            Self::Azazel => { "Azazel" },
+            Self::Lazarus => { "Lazarus" },
             Self::Eden => { "Eden" },
             Self::Lost => { "Lost" },
-            Self::TaintedKeeper => { "Tainted Keeper" },
+            Self::Lilith => { "Lilith" },
+            Self::Keeper => { "Keeper" },
+            Self::Apollyon => { "Apollyon" },
+            Self::Forgotten => { "Forgotten" },
+            Self::Bethany => { "Bethany" },
+            Self::Jacob => { "Jacob & Esau" },
+
+            Self::TaintedIsaac => { "Tainted Isaac" },
+            Self::TaintedMagdalene => { "Tainted Magdalene" },
+            Self::TaintedCain => { "Tainted Cain" },
+            Self::TaintedJudas => { "Tainted Judas" },
+            Self::TaintedBlueBaby => { "TaintedBlueBaby" },
+            Self::TaintedEve => { "Tainted Eve" },
+            Self::TaintedSamson => { "Tainted Samson" },
+            Self::TaintedAzazel => { "Tainted Azazel" },
+            Self::TaintedLazarus => { "Tainted Lazarus" },
+            Self::TaintedEden => { "Tainted Eden" },
             Self::TaintedLost => { "Tainted Lost" },
+            Self::TaintedLilith => { "Tainted Lilith" },
+            Self::TaintedKeeper => { "Tainted Keeper" },
+            Self::TaintedApollyon => { "Tainted Apollyon" },
+            Self::TaintedForgotten => { "Tainted Forgotten" },
+            Self::TaintedBethany => { "Tainted Bethany" },
+            Self::TaintedJacob => { "Tainted Jacob" },
+
             Self::RandomV1 => { "Random V1" },
             Self::RandomV2 => { "Random V2" },
+            Self::FullRandom => { "Full Random" },
 
             Self::Challenge => { "Challenge" },
-            Self::Dead => { "Dead" },
+            Self::Save => { "Save" },
         }
     }
 
     pub fn get_vec() -> Vec<Self> {
         vec![
+            Self::Isaac,
+            Self::Magdalene,
+            Self::Cain,
+            Self::Judas,
+            Self::BlueBaby,
+            Self::Eve,
+            Self::Samson,
+            Self::Azazel,
+            Self::Lazarus,
             Self::Eden,
             Self::Lost,
-            Self::TaintedKeeper,
+            Self::Lilith,
+            Self::Keeper,
+            Self::Apollyon,
+            Self::Forgotten,
+            Self::Bethany,
+            Self::Jacob,
+
+            Self::TaintedIsaac,
+            Self::TaintedMagdalene,
+            Self::TaintedCain,
+            Self::TaintedJudas,
+            Self::TaintedBlueBaby,
+            Self::TaintedEve,
+            Self::TaintedSamson,
+            Self::TaintedAzazel,
+            Self::TaintedLazarus,
+            Self::TaintedEden,
             Self::TaintedLost,
+            Self::TaintedLilith,
+            Self::TaintedKeeper,
+            Self::TaintedApollyon,
+            Self::TaintedForgotten,
+            Self::TaintedBethany,
+            Self::TaintedJacob,
+
             Self::RandomV1,
             Self::RandomV2,
+            Self::FullRandom,
 
             Self::Challenge,
-            Self::Dead,
+            Self::Save,
         ]
     }
 }
@@ -50,12 +149,15 @@ pub enum Goal {
     TheLamb,
     Mother,
     TheBeast,
+
     MegaSatan,
     Delirium,
     Greedier,
+
     FourGoals,
     SixGoals,
     RandomBoss,
+    Hoarder,
     
     UltraHard,
     Speed,
@@ -63,7 +165,7 @@ pub enum Goal {
     DeleteThis,
     Backasswards,
 
-    God,
+    DeadGod,
 }
 
 impl Goal {
@@ -73,12 +175,15 @@ impl Goal {
             Self::TheLamb => { "The Lamb" },
             Self::Mother => { "Mother" },
             Self::TheBeast => { "The Beast" },
+
             Self::MegaSatan => { "Mega Satan" },
             Self::Delirium => { "Delirium" },
             Self::Greedier => { "Greedier" },
+
             Self::FourGoals => { "4 Goals" },
             Self::SixGoals => { "6 Goals" },
             Self::RandomBoss => { "Random Boss" },
+            Self::Hoarder => { "Hoarder" },
 
             Self::UltraHard => { "Ultra Hard" },
             Self::Speed => { "SPEED!" },
@@ -86,7 +191,7 @@ impl Goal {
             Self::DeleteThis => { "DELETE THIS" },
             Self::Backasswards => { "Backasswards"},
 
-            Self::God => { "Dead God" },
+            Self::DeadGod => { "Dead God" },
         }
     }
 
@@ -96,12 +201,15 @@ impl Goal {
             Self::TheLamb,
             Self::Mother,
             Self::TheBeast,
+            
             Self::MegaSatan,
             Self::Delirium,
             Self::Greedier,
+
             Self::FourGoals,
             Self::SixGoals,
             Self::RandomBoss,
+            Self::Hoarder,
 
             Self::UltraHard,
             Self::Speed,
@@ -109,7 +217,7 @@ impl Goal {
             Self::DeleteThis,
             Self::Backasswards,
 
-            Self::God,
+            Self::DeadGod,
         ]
     }
 }
