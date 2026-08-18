@@ -150,6 +150,9 @@ pub enum Goal {
     Mother,
     TheBeast,
 
+    BossRush,
+    Hush,
+
     MegaSatan,
     Delirium,
     Greedier,
@@ -175,6 +178,9 @@ impl Goal {
             Self::TheLamb => { "The Lamb" },
             Self::Mother => { "Mother" },
             Self::TheBeast => { "The Beast" },
+
+            Self::BossRush => { "Boss Rush" },
+            Self::Hush => { "Hush" },
 
             Self::MegaSatan => { "Mega Satan" },
             Self::Delirium => { "Delirium" },
@@ -202,6 +208,9 @@ impl Goal {
             Self::Mother,
             Self::TheBeast,
             
+            Self::BossRush,
+            Self::Hush,
+
             Self::MegaSatan,
             Self::Delirium,
             Self::Greedier,
